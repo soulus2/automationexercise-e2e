@@ -68,3 +68,13 @@ Automated by **Nikoloz Ejibadze**:
 Arch Linux (optional install):
 ```bash
 sudo pacman -S maven allure
+```
+---
+
+## Test Stack Run Commands
+
+### Run the full test suite (UI + API)
+```bash
+mvn clean test
+allure serve target/allure-results
+```
