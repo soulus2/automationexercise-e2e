@@ -37,14 +37,13 @@ public class UiTests extends BaseUiTest {
 
     private String[] createUserViaApi() {
         String email = "ui" + System.currentTimeMillis() + "@example.com";
-        String password = "Pass1234!";
+        String password = "correct!";
         usersApi.createAccount(newUserForm(email, password));
         return new String[]{email, password};
     }
 
-    // TC2
     @Test
-    public void tc2_loginUser_correctEmailPassword() {
+    public void loginUser_correctEmailPassword() {
         var creds = createUserViaApi();
 
         HomePage home = new HomePage(driver, waits).open();
@@ -57,9 +56,8 @@ public class UiTests extends BaseUiTest {
         login.deleteAccountFromUi();
     }
 
-    // TC3
     @Test
-    public void tc3_loginUser_incorrectEmailPassword() {
+    public void loginUser_incorrectEmailPassword() {
         HomePage home = new HomePage(driver, waits).open();
         SignupLoginPage login = home.goToSignupLogin();
 
@@ -68,9 +66,8 @@ public class UiTests extends BaseUiTest {
         login.assertLoginError();
     }
 
-    // TC4
     @Test
-    public void tc4_logoutUser() {
+    public void logoutUser() {
         var creds = createUserViaApi();
 
         HomePage home = new HomePage(driver, waits).open();
@@ -83,9 +80,8 @@ public class UiTests extends BaseUiTest {
         login.assertLoginVisible();
     }
 
-    // TC5
     @Test
-    public void tc5_registerUser_existingEmail() {
+    public void registerUser_existingEmail() {
         var creds = createUserViaApi();
 
         HomePage home = new HomePage(driver, waits).open();
@@ -96,9 +92,8 @@ public class UiTests extends BaseUiTest {
         page.assertExistingEmailError();
     }
 
-    // TC6
     @Test
-    public void tc6_contactUsForm() {
+    public void contactUsForm() {
         driver.get(Config.baseUrl() + "/contact_us");
         ContactUsPage cu = new ContactUsPage(driver, waits);
 
@@ -112,17 +107,15 @@ public class UiTests extends BaseUiTest {
         );
     }
 
-    // TC7
     @Test
-    public void tc7_verifyTestCasesPage() {
+    public void verifyTestCasesPage() {
         HomePage home = new HomePage(driver, waits).open();
         TestCasesPage tc = home.goToTestCases();
         tc.assertVisible();
     }
 
-    // TC8
     @Test
-    public void tc8_verifyAllProducts_and_detailPage() {
+    public void verifyAllProducts_and_detailPage() {
         HomePage home = new HomePage(driver, waits).open();
         ProductsPage products = home.goToProducts();
 
@@ -131,9 +124,8 @@ public class UiTests extends BaseUiTest {
         detail.assertDetailsVisible();
     }
 
-    // TC9
     @Test
-    public void tc9_searchProduct() {
+    public void searchProduct() {
         HomePage home = new HomePage(driver, waits).open();
         ProductsPage products = home.goToProducts();
 
@@ -141,16 +133,14 @@ public class UiTests extends BaseUiTest {
         products.search("top");
     }
 
-    // TC10
     @Test
-    public void tc10_verifySubscription_homePage() {
+    public void verifySubscription_homePage() {
         HomePage home = new HomePage(driver, waits).open();
         home.subscribe("sub" + System.currentTimeMillis() + "@example.com");
     }
 
-    // TC12
     @Test
-    public void tc12_addProductsInCart() {
+    public void addProductsInCart() {
         HomePage home = new HomePage(driver, waits).open();
         ProductsPage products = home.goToProducts();
 

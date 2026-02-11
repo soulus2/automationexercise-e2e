@@ -56,57 +56,50 @@ public class ApiTests extends BaseApiTest {
         return f;
     }
 
-    // API 1
     @Test
-    public void api1_getAllProductsList() {
+    public void getAllProductsList() {
         var res = productsApi.getAllProducts();
         assertEquals(res.statusCode(), 200);
         assertTrue(res.asString().toLowerCase().contains("products"));
     }
 
-    // API 3
     @Test
-    public void api3_getAllBrandsList() {
+    public void getAllBrandsList() {
         var res = brandsApi.getAllBrands();
         assertEquals(res.statusCode(), 200);
         assertTrue(res.asString().toLowerCase().contains("brands"));
     }
 
-    // API 5
     @Test
-    public void api5_searchProduct_valid() {
+    public void searchProduct_valid() {
         var res = productsApi.searchProduct("top");
         assertEquals(res.statusCode(), 200);
         assertTrue(res.asString().toLowerCase().contains("products"));
     }
 
-    // API 6 (platform often returns HTTP 200 + JSON responseCode=400)
     @Test
-    public void api6_searchProduct_missingParam() {
+    public void searchProduct_missingParam() {
         var res = productsApi.searchProductMissingParam();
         assertEquals(res.statusCode(), 200);
         assertEquals(res.jsonPath().getInt("responseCode"), 400);
     }
 
-    // API 8 (missing email)
     @Test
-    public void api8_verifyLogin_missingEmail() {
+    public void verifyLogin_missingEmail() {
         var res = usersApi.verifyLoginMissingEmail("whatever");
         assertEquals(res.statusCode(), 200);
         assertEquals(res.jsonPath().getInt("responseCode"), 400);
     }
 
-    // API 10 (invalid details)
     @Test
-    public void api10_verifyLogin_invalidDetails() {
+    public void verifyLogin_invalidDetails() {
         var res = usersApi.verifyLogin("nope" + System.currentTimeMillis() + "@example.com", "wrong");
         assertEquals(res.statusCode(), 200);
         assertEquals(res.jsonPath().getInt("responseCode"), 404);
     }
 
-    // API 11 + API 7 + API 14 + API 12
     @Test
-    public void api11_create_api7_verify_api14_getDetail_api12_delete() {
+    public void userLifeCycle() {
         String email = "user" + System.currentTimeMillis() + "@example.com";
         String password = "Pass1234!";
 
@@ -127,23 +120,20 @@ public class ApiTests extends BaseApiTest {
         assertEquals(del.jsonPath().getInt("responseCode"), 200);
     }
 
-    // API 2
     @Test
-    public void api2_postAllProductsList_methodNotSupported() {
+    public void postAllProductsList_methodNotSupported() {
         var res = productsApi.postAllProductsList();
         assertMethodNotSupported(res);
     }
 
-    // API 4
     @Test
-    public void api4_putAllBrandsList_methodNotSupported() {
+    public void putAllBrandsList_methodNotSupported() {
         var res = brandsApi.putAllBrandsList();
         assertMethodNotSupported(res);
     }
 
-    // API 9
     @Test
-    public void api9_deleteVerifyLogin_methodNotSupported() {
+    public void deleteVerifyLogin_methodNotSupported() {
         var res = usersApi.deleteVerifyLogin();
         assertMethodNotSupported(res);
     }
